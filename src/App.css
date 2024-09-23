@@ -46,22 +46,38 @@
   color: #888;
 }
 
+.characters-sec{
+  max-width: 1080px;
+  margin: auto;
+}
+
 .characters-row{
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 16px;
 }
 
 article{
-  border: 1px solid #e3e3e3;
   margin: 15px 0;
-  max-width: 18em;
+  max-width: 15em;
+  text-align: left;
+  color: #333;
+  border-radius: 8px;
+  overflow: hidden;
 
   img{
     width: 100%;
     height: 250px;
     object-fit: cover;
+  }
+
+  p{
+    background: greenyellow;
+    display: inline-block;
+    padding: 5px;
+    border-radius: 6px;
+    color: #333;
   }
 }
 
@@ -100,5 +116,21 @@ header ul{
 
   a:hover{
     color: #000;
+  }
+}
+
+.title-left{
+  text-align: left;
+}
+
+.search-container{
+  text-align: left;
+  margin: 15px 0;
+  width: 100%;
+  background-color: #777;
+  padding: 15px;
+
+  label{
+    display: block;
   }
 }

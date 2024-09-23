@@ -16,21 +16,35 @@ export default function Home() {
             .then(data => {
                 const { characters } = data
                 const response = characters ? characters : []
+                console.log(response)
                 setCharacters(response)
             })
             .finally(() => setIsLoading(false))
     }, [currentpage])
 
+    const handleSubmit = e => {
+        e.preventDefault()
+    }
+
     return (
         <>
-            <h1>Personajes de Naruto</h1>
 
-            <section className='characters-row'>
-                {
-                    isLoading
-                        ? <h2>LOADING...</h2>
-                        : <ListOfCharacters characters={characters} />
-                }
+            <section className='characters-sec'>
+                <h3 className="title-left">Personajes de Naruto</h3>
+                <div className="search-container">
+                    <form onSubmit={handleSubmit}>
+                        <label htmlFor="">Nombre o clan</label>
+                        <input type="text" />
+                        <button>Buscar</button>
+                    </form>
+                </div>
+                <div className="characters-row">
+                    {
+                        isLoading
+                            ? <h2>LOADING...</h2>
+                            : <ListOfCharacters characters={characters} />
+                    }
+                </div>
             </section>
 
             <div className="pagination">
