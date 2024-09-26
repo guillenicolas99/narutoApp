@@ -17,6 +17,7 @@ export default function Home() {
                 const { characters } = data
                 const response = characters ? characters : []
                 console.log(response)
+                response.map(el => console.log(el?.images.length))
                 setCharacters(response)
             })
             .finally(() => setIsLoading(false))
