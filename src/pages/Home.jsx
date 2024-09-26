@@ -16,8 +16,6 @@ export default function Home() {
             .then(data => {
                 const { characters } = data
                 const response = characters ? characters : []
-                console.log(response)
-                response.map(el => console.log(el?.images.length))
                 setCharacters(response)
             })
             .finally(() => setIsLoading(false))
@@ -30,19 +28,25 @@ export default function Home() {
     return (
         <>
 
-            <section className='characters-sec'>
+            <section className='characters-sec container'>
                 <h3 className="title-left">Personajes de Naruto</h3>
-                <div className="search-container">
-                    <form onSubmit={handleSubmit}>
-                        <label htmlFor="">Nombre o clan</label>
-                        <input type="text" />
-                        <button>Buscar</button>
-                    </form>
-                </div>
-                <div className="characters-row">
+
+                <form onSubmit={handleSubmit} role="search">
+                    <fieldset role="group">
+                        <input
+                            type="search"
+                            name="search"
+                            placeholder="Nombre o clan"
+                            aria-label="Search"
+                        />
+                        <button type="submit">Buscar</button>
+                    </fieldset>
+                </form>
+
+                <div className="characters-row container">
                     {
                         isLoading
-                            ? <h2>LOADING...</h2>
+                            ? <button aria-busy="true" className="outline contrast">Please wait…</button>
                             : <ListOfCharacters characters={characters} />
                     }
                 </div>

@@ -10,9 +10,12 @@ export default function ListOfCharacters({ characters }) {
                         <NavLink key={singleCharacter.id} to={`/character/${singleCharacter.id}`}>
                             <article>
                                 <img src={img} alt={singleCharacter.name} />
-                                <h4 className="card-title">{singleCharacter.name}</h4>
-                                {singleCharacter?.debut?.appearsIn && <small>{singleCharacter.debut.appearsIn}</small>}
-                                {singleCharacter?.personal?.clan && <p>{singleCharacter.personal.clan}</p>}
+                                <footer>
+
+                                    <h4 className="card-title">{singleCharacter.name}</h4>
+                                    {singleCharacter?.debut?.appearsIn && <small>{singleCharacter.debut.appearsIn}</small>}
+                                    {singleCharacter?.personal?.clan && <p>{singleCharacter.personal.clan}</p>}
+                                </footer>
                             </article>
                         </NavLink>
                     )
