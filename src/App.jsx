@@ -6,7 +6,7 @@ import Header from './Components/Header'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 import Clans from './pages/Clans'
-import SingleCharacter from './pages/singleCharacter'
+import SingleCharacter from './pages/SingleCharacter'
 
 function App() {
 
