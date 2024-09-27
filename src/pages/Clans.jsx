@@ -1,22 +1,17 @@
-import { useEffect, useState } from "react"
-import getClans from "../services/getClans"
+import useFetch from "../Hooks/useFetch"
+import LoadingBtn from "../Components/LoadingBtn"
 
 export default function Clans() {
+    const { data, loading, error } = useFetch('https://narutodb.xyz/api/clan')
 
-    const [clans, setClans] = useState([])
+    if (loading) return <LoadingBtn />
+    if (error) return <p>Error: {error}</p>;
 
-    useEffect(() => {
-        getClans().then(data => {
-            const response = data.clans ? data.clans : []
-            setClans(response)
-        })
-    }, [])
-    
     return (
         <>
-        <h1>Lista de todos los clans</h1>
+            <h1>Lista de todos los clans</h1>
             {
-                clans.map((clan, index) => <p key={clan.id}> <small>{ index + 1 }</small>. {clan.name}</p>)
+                data.clans.map((clan, index) => <p key={clan.id}> <small>{index + 1}</small>. {clan.name}</p>)
             }
         </>
     )

@@ -1,33 +1,31 @@
 import { useEffect, useState } from "react"
 import ListOfCharacters from "../Components/ListOfCharacters"
-// import { useParams } from "react-router-dom"
-import getCharacters from "../services/getCharacters"
+import useFetch from "../Hooks/useFetch";
+import LoadingBtn from "../Components/LoadingBtn";
 
 export default function Home() {
-    // let page = useParams()
-    const [isLoading, setIsLoading] = useState(true)
-    const [characters, setCharacters] = useState([])
     const [currentpage, setCurrentPage] = useState(1)
-    const [paginationSize, setPaginationSize] = useState(0)
-
-    useEffect(() => {
-        setIsLoading(true)
-        getCharacters(currentpage)
-            .then(data => {
-                const { characters } = data
-                const response = characters ? characters : []
-                setCharacters(response)
-            })
-            .finally(() => setIsLoading(false))
-    }, [currentpage])
+    const API_URL = `https://narutodb.xyz/api/character?page=${currentpage}&limit=20`
+    const { data, loading, error } = useFetch(API_URL)
+    const [search, setSearch] = useState(null)
 
     const handleSubmit = e => {
         e.preventDefault()
+        console.log('submit')
     }
+
+    const handdleChange = e => {
+        console.log(e.target.value)
+        setSearch(e.target.value)
+    }
+
+    if (loading) return <LoadingBtn />
+    if (error) return <p>Error: {error}</p>;
+
+    if (!Array.isArray(data.characters)) return <p>No se encontraron personajes</p>
 
     return (
         <>
-
             <section className='characters-sec container'>
                 <h3 className="title-left">Personajes de Naruto</h3>
 
@@ -38,17 +36,14 @@ export default function Home() {
                             name="search"
                             placeholder="Nombre o clan"
                             aria-label="Search"
+                            onChange={handdleChange}
                         />
                         <button type="submit">Buscar</button>
                     </fieldset>
                 </form>
 
                 <div className="characters-row container">
-                    {
-                        isLoading
-                            ? <button aria-busy="true" className="outline contrast">Please wait…</button>
-                            : <ListOfCharacters characters={characters} />
-                    }
+                    <ListOfCharacters characters={data?.characters} />
                 </div>
             </section>
 
@@ -61,7 +56,7 @@ export default function Home() {
                 }
                 <button disabled className='current-btn'>{currentpage}</button>
                 {
-                    currentpage >= paginationSize
+                    currentpage >= 0
                     && <button onClick={() => setCurrentPage(currentpage => currentpage + 1)}>
                         {currentpage + 1}
                     </button>
