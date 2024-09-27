@@ -2,27 +2,34 @@ import { useEffect, useState } from "react"
 import ListOfCharacters from "../Components/ListOfCharacters"
 import useFetch from "../Hooks/useFetch";
 import LoadingBtn from "../Components/LoadingBtn";
+import SearchCharacter from "../Components/SearchCharacter";
 
 export default function Home() {
-    const [currentpage, setCurrentPage] = useState(1)
-    const API_URL = `https://narutodb.xyz/api/character?page=${currentpage}&limit=20`
-    const { data, loading, error } = useFetch(API_URL)
+    const [currentPage, setCurrentPage] = useState(1)
     const [search, setSearch] = useState(null)
+    const [apiUrl, setApiUrl] = useState(`https://narutodb.xyz/api/character?page=${currentPage}&limit=20`)
+    const { data, loading, error } = useFetch(apiUrl)
+
+    useEffect(() => {
+        if (search) {
+            setApiUrl(`https://narutodb.xyz/api/character/search?name=${search}`);
+        } else {
+            setApiUrl(`https://narutodb.xyz/api/character?page=${currentPage}&limit=20`);
+        }
+    }, [currentPage, search]);
+
+    console.log(data)
+    console.log(search)
 
     const handleSubmit = e => {
         e.preventDefault()
-        console.log('submit')
-    }
-
-    const handdleChange = e => {
-        console.log(e.target.value)
-        setSearch(e.target.value)
+        const { characterName } = Object.fromEntries(new window.FormData(e.target))
+        console.log(characterName)
+        setSearch(characterName)
     }
 
     if (loading) return <LoadingBtn />
-    if (error) return <p>Error: {error}</p>;
-
-    if (!Array.isArray(data.characters)) return <p>No se encontraron personajes</p>
+    if (error) return <p>Error: {error}</p>
 
     return (
         <>
@@ -33,32 +40,35 @@ export default function Home() {
                     <fieldset role="group">
                         <input
                             type="search"
-                            name="search"
-                            placeholder="Nombre o clan"
+                            name="characterName"
+                            placeholder="Nombre"
                             aria-label="Search"
-                            onChange={handdleChange}
                         />
                         <button type="submit">Buscar</button>
                     </fieldset>
                 </form>
 
                 <div className="characters-row container">
-                    <ListOfCharacters characters={data?.characters} />
+                    {
+                        search != null
+                            ? <SearchCharacter character={data} />
+                            : <ListOfCharacters characters={data?.characters} />
+                    }
                 </div>
             </section>
 
             <div className="pagination">
                 {
-                    currentpage > 1
+                    currentPage > 1
                     && <button onClick={() => setCurrentPage(currentpage => currentpage - 1)}>
-                        {currentpage - 1}
+                        {currentPage - 1}
                     </button>
                 }
-                <button disabled className='current-btn'>{currentpage}</button>
+                <button disabled className='current-btn'>{currentPage}</button>
                 {
-                    currentpage >= 0
+                    currentPage >= 0
                     && <button onClick={() => setCurrentPage(currentpage => currentpage + 1)}>
-                        {currentpage + 1}
+                        {currentPage + 1}
                     </button>
                 }
             </div>
