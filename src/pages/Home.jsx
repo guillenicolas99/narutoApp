@@ -18,18 +18,19 @@ export default function Home() {
         }
     }, [currentPage, search]);
 
-    console.log(data)
-    console.log(search)
-
     const handleSubmit = e => {
         e.preventDefault()
         const { characterName } = Object.fromEntries(new window.FormData(e.target))
-        console.log(characterName)
         setSearch(characterName)
     }
 
     if (loading) return <LoadingBtn />
-    if (error) return <p>Error: {error}</p>
+    if (error) return (
+        <>
+            <p>Error: {error}</p>
+            <button onClick={() => window.location.reload()}>Ir a inicio</button>
+        </>
+    )
 
     return (
         <>

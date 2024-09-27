@@ -4,7 +4,6 @@ const useFetch = (url) => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    console.log(url)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -12,7 +11,7 @@ const useFetch = (url) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Error en la respuesta de la API');
+                    throw new Error('Error en el resultado');
                 }
                 const result = await response.json();
                 const apiReuslt = result ? result : []
