@@ -57,21 +57,25 @@ export default function Home() {
                 </div>
             </section>
 
-            <div className="pagination">
-                {
-                    currentPage > 1
-                    && <button onClick={() => setCurrentPage(currentpage => currentpage - 1)}>
-                        {currentPage - 1}
-                    </button>
-                }
-                <button disabled className='current-btn'>{currentPage}</button>
-                {
-                    currentPage >= 0
-                    && <button onClick={() => setCurrentPage(currentpage => currentpage + 1)}>
-                        {currentPage + 1}
-                    </button>
-                }
-            </div>
+            {
+                search == null
+                    ? <div className="pagination">
+                        {
+                            currentPage > 1
+                            && <button onClick={() => setCurrentPage(currentpage => currentpage - 1)}>
+                                {currentPage - 1}
+                            </button>
+                        }
+                        <button disabled className='current-btn'>{currentPage}</button>
+                        {
+                            currentPage >= 0
+                            && <button onClick={() => setCurrentPage(currentpage => currentpage + 1)}>
+                                {currentPage + 1}
+                            </button>
+                        }
+                    </div>
+                    : null
+            }
         </>
     )
 }
