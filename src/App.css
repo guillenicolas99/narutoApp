@@ -24,3 +24,22 @@
   grid-template-columns: repeat(auto-fit,minmax(270px,1fr));
   gap: 16px;
 }
+
+article{
+  background-color: #181c25;
+  max-width: 15em;
+  margin: auto;
+  color: #fff;
+
+  box-shadow: none;
+
+  footer{
+    background-color: #1a1f28;
+  }
+}
+
+input{
+  background-color: #1c212c;
+  border: 1px solid transparent;
+  color: #fff;
+}

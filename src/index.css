@@ -12,8 +12,9 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
-  background: #111;
+  background: #13171f;
   font-family: "Montserrat", system-ui;
+  color: #fff;
 }
 
 h1 {

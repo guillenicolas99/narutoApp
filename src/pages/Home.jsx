@@ -11,11 +11,9 @@ export default function Home() {
     const { data, loading, error } = useFetch(apiUrl)
 
     useEffect(() => {
-        if (search) {
-            setApiUrl(`https://narutodb.xyz/api/character/search?name=${search}`);
-        } else {
-            setApiUrl(`https://narutodb.xyz/api/character?page=${currentPage}&limit=20`);
-        }
+        const searchUrl = `https://narutodb.xyz/api/character/search?name=${search}`
+        const charactersUrl = `https://narutodb.xyz/api/character?page=${currentPage}&limit=20`
+        search ? setApiUrl(searchUrl) : setApiUrl(charactersUrl)
     }, [currentPage, search]);
 
     const handleSubmit = e => {
