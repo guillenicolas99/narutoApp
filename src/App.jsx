@@ -1,4 +1,5 @@
 import './App.css'
+import './index.css'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -11,7 +12,7 @@ import SingleCharacter from './pages/SingleCharacter'
 function App() {
 
   return (
-    <>
+    <main className="bg-gray-900">
       <Header />
 
       <Routes>
@@ -23,7 +24,7 @@ function App() {
         <Route path='/character/:id' element={<SingleCharacter />} />
         <Route path='*' element={<NotFound />} />
       </Routes>
-    </>
+    </main>
   )
 }
 
